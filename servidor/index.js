@@ -24,4 +24,42 @@ db.connect((erro) => {
     }
 });
 
+// Rota para cadastrar usuário
+app.post('/alunos', (req, res) => {
+    const { nome, cidade, estado } = req.body;
 
+    const sql = 'INSERT INTO alunos (nome, cidade, estado) VALUES (?, ?, ?)';
+    
+    db.query(sql, [nome, cidade, estado], (err, result) => {
+        if (err) 
+        {
+            return res.status(500).json({ error: 'Erro ao cadastrar aluno !' });
+        }
+        res.status(201).json({ message: 'Aluno cadastrado com sucesso!', id: result.insertId });
+    });
+});
+
+// Rota para consultar um usuário específico pelo ID
+app.get('/alunos/:codigo', (req, res) => {
+    const { codigo } = req.params;
+  
+    const sql = 'SELECT * FROM alunos WHERE codigo = ?';
+    db.query(sql, [codigo], (err, results) => {
+      if (err) {
+        console.error('Erro ao buscar usuário:', err);
+        return res.status(500).json({ error: 'Erro ao buscar alunos' });
+      }
+  
+      if (results.length === 0) {
+        console.error('Usuário não encontrado:', err);
+        return res.status(404).json({ error: 'Usuárionão encontrado' });
+      }
+  
+      res.json(results[0]); // Retorna o primeiro resultado (usuário encontrado)
+    });
+});
+
+// Iniciando o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
