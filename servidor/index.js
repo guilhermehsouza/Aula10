@@ -40,6 +40,20 @@ app.post('/alunos', (req, res) => {
 });
 
 // Rota para consultar um usuário específico pelo ID
+app.get('/alunos', (req, res) => {    
+  
+    const sql = 'SELECT * FROM alunos';
+
+    db.query(sql, (err, results) => {
+      if (err) {        
+        return res.status(500).json({ error: 'Erro ao consultar alunos' });
+      }  
+    
+      res.json(results);
+    });
+});
+
+// Rota para consultar um usuário específico pelo ID
 app.get('/alunos/:codigo', (req, res) => {
     const { codigo } = req.params;
   

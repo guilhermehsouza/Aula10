@@ -3,10 +3,11 @@ import axios from 'axios';
 
 export default function Cadastro()
 {
+
     const [nome, setNome] = useState('');
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState(''); 
-    const [resultado, setResultado] = useState(null);
+    const [resultado, setResultado] = useState(null);    
 
     async function cadastarAluno(e)
     {
@@ -23,7 +24,7 @@ export default function Cadastro()
         {
             setResultado(error);
         }
-    };
+    }
 
     return (
         <div>            
@@ -53,9 +54,10 @@ export default function Cadastro()
                         onChange={(e) => setEstado(e.target.value)}
                     />
                 </p>
-                
+
                 <p>
-                    <button type='button' className='botao' onClick={cadastarAluno}>Cadastrar</button>
+                    <button type='button' className='botao' 
+                    onClick={cadastarAluno}>Cadastrar</button>
                 </p>
 
                 <p className="mensagem">
